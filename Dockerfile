@@ -37,6 +37,15 @@ RUN apk add --no-cache bash openssh ca-certificates jq curl openssl git \
  && apk add --no-cache --virtual .build-deps gcc make openssl-dev libffi-dev musl-dev \
  && update-ca-certificates
 
+ENV SONAR_SCANNER_VERSION=2.5.1 \
+    SONAE_URL=https://sonarsource.bintray.com/Distribution
+
+RUN echo "---> Installing Sonar Scanner" \
+    && wget -O sonarscanner.zip --no-verbose $SONAE_URL/sonar-scanner-cli/sonar-scanner-$SONAR_SCANNER_VERSION.zip \
+    && unzip sonarscanner.zip \
+    && mv sonar-scanner-$SONAR_SCANNER_VERSION sonar-scanner \
+    && rm sonarscanner.zip
+
 ARG JP_VERSION="0.1.3"
 
 RUN curl https://github.com/jmespath/jp/releases/download/${JP_VERSION}/jp-linux-amd64 -o /usr/local/bin/jp \
