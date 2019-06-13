@@ -1,0 +1,45 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    environment:
+      TAG: 1.0.0
+    steps:
+      - checkout
+      - run:
+          name: Build Image
+          command: |
+            docker build -t ismaleiva90/azure-cli:$TAG .
+            docker build -t ismaleiva90/azure-cli:latest .
+      - run:
+          name: Test Image
+          command: |
+            docker run -it ismaleiva90/azure-cli:$TAG node -v
+            docker run -it ismaleiva90/azure-cli:$TAG npm -v
+            docker run -it ismaleiva90/azure-cli:$TAG az -v
+
+  deploy-prod:
+    machine: true
+    environment:
+      TAG: 1.0.0
+    steps:
+      - run:
+          name: Deploy if tests pass and branch is Master
+          command: |
+            docker login -u ismaleiva90 -p $DOCKER_PASS
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - dev
+      - deploy-prod:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
