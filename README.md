@@ -1,6 +1,12 @@
 
 # This version add node to the docker images
 
+[![CircleCI](https://circleci.com/gh/isma90/azure-cli/tree/dev.svg?style=svg)](https://circleci.com/gh/isma90/azure-cli/tree/dev)
+
+**Useful to use in CI/CD**
+
+#
+---
 
 # Microsoft Azure CLI
 
