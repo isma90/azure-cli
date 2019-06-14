@@ -18,6 +18,7 @@ jobs:
             docker run -it $USER/$IMAGE:$TAG node -v
             docker run -it $USER/$IMAGE:$TAG npm -v
             docker run -it $USER/$IMAGE:$TAG pip --version
+            docker run -it $USER/$IMAGE:$TAG az -v
   deploy:
     machine: true
     environment:
